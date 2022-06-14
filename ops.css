@@ -1,0 +1,63 @@
+.manga-collection-item img {
+	width: auto !important;
+}
+
+.svg-color {
+	filter: invert(90%) sepia(4%) saturate(339%) hue-rotate(196deg) brightness(109%) contrast(92%);
+}
+
+.view-selection-button.selected {
+	border-color: #ff4f5e;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.selected .vbutton-text {
+	color: #ff4f5e;
+	text-decoration: none;
+}
+
+.selected .svg-color {
+	filter: invert(46%) sepia(37%) saturate(4930%) hue-rotate(326deg) brightness(102%) contrast(101%);
+}
+
+.owl-carousel .owl-item img {
+	max-width: 100%;
+	max-height: 100vh;
+	width: auto !important;
+  	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.manga-slider-pages .item img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.isDisabled {
+	cursor: not-allowed;
+	color: #888888;
+	text-decoration: none;
+}
+
+.isDisabledButton {
+	cursor: not-allowed;
+	background-color: #888888;
+	color: #000000;
+	text-decoration: none;
+}
+
+.w--current {
+	border: 1px solid #ff4f5e;
+	background-color: rgba(255, 79, 94, 0.5);
+}
+
+.owl-item #actions-div {
+	height: 100vh;
+}
+
+.action-title-section, .action-buttons-section {
+	direction: ltr!important;
+}
