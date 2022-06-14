@@ -111,6 +111,10 @@ Webflow.push(function () {
             navigator.clipboard.writeText(current_chapter_href);
             $('#alertShareCopySuccess').show().delay(1000).fadeOut(800);
         });
+        $('#menuBottomActionShare').on('click', function () {
+            navigator.clipboard.writeText(current_chapter_href);
+            $('#alertShareCopySuccess').show().delay(1000).fadeOut(800);
+        });
 
         //
         // END OF 2. Populate previous/next chapter button
