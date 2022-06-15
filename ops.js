@@ -14,6 +14,7 @@ Webflow.push(function () {
         $('.expansion-3').hide();
         $('#menuLinkCopyAlert').hide();
         $('.alert-popup').hide();
+        $('#reader-tipping-menu').hide();
 
         //Ensure that refresh will reset the chapter to the 1st image
         window.onbeforeunload = function () {
@@ -48,11 +49,7 @@ Webflow.push(function () {
             }
         }
 
-        // Hide menu on click or touch
-        $('.manga-slider').on('click', function () {
-            hideShowMenu();
-        });
-
+        // Hide menu on swipe
         $('.manga-slider').on('swipe', function () {
             if ($('.menu-top').is(":visible")) {
                 hideMenu();
@@ -60,10 +57,26 @@ Webflow.push(function () {
         });
 
         // Hide menu on scroll
-        $(window).scroll(function () {
-            if ($('.menu-top').is(":visible")) {
-                hideMenu();
+        var lastScrollTop = 0,
+            delta = 5;
+        $(window).scroll(function (event) {
+            var st = $(this).scrollTop();
+
+            if (Math.abs(lastScrollTop - st) <= delta)
+                return;
+
+            if (st > lastScrollTop) {
+                // downscroll code
+                if ($('.menu-top').is(":visible")) {
+                    hideMenu();
+                }
+            } else {
+                // upscroll code
+                if ($('.menu-top').not(":visible")) {
+                    showMenu();
+                }
             }
+            lastScrollTop = st;
         });
 
         //
@@ -108,10 +121,6 @@ Webflow.push(function () {
         $('#menuTopTitleButton').attr('href', current_title_href);
         $('#menuBottomChaptersCount').text('(' + current_chapter_count + ')');
         $('#menuTopShareLink').on('click', function () {
-            navigator.clipboard.writeText(current_chapter_href);
-            $('#alertShareCopySuccess').show().delay(1000).fadeOut(800);
-        });
-        $('#menuBottomActionShare').on('click', function () {
             navigator.clipboard.writeText(current_chapter_href);
             $('#alertShareCopySuccess').show().delay(1000).fadeOut(800);
         });
@@ -166,6 +175,29 @@ Webflow.push(function () {
         $('#visibleManga').append('<div id="actions-div" class="item manga-actions"></div>');
         $('#mangaActions').children().clone().appendTo('#actions-div');
 
+        // Hide menu on click or touch
+        $('#visibleManga .item').on('click', function () {
+            if($(this).hasClass('manga-actions')){
+                if ($('.menu-top').is(":visible")) {
+                    hideMenu();
+                }
+            }else{
+                hideShowMenu();
+            }
+        });
+
+        //Show tipping menu
+        $('#menuBottomActionTip').on('click',function(){
+            if ($('.menu-top').is(":visible")) {
+                hideMenu();
+            }
+            $('#reader-tipping-menu').slideDown(200);
+        });
+
+        $('#tippingCloseButton').on('click',function(){
+            $('#reader-tipping-menu').slideUp(200);
+        });
+
         //if last post in list
         if (next_chapter_state == false) {
             $('#actions-div .next-chapter-button').removeAttr("href"); //optional - remove if you want to loop to beginning
@@ -183,6 +215,12 @@ Webflow.push(function () {
         $('#ImgCollection2').remove();
         $('#ImgCollection3').remove();
         $('#ImgCollection4').remove();
+
+        //Add share action
+        $('#menuBottomActionShare').on('click', function () {
+            navigator.clipboard.writeText(current_chapter_href);
+            $('#alertShareCopySuccess').show().delay(1000).fadeOut(800);
+        })
 
         // Specify owl selector div
         var owlSelector = $("#visibleManga");
